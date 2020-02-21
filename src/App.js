@@ -44,17 +44,29 @@ const useStyles = makeStyles(theme => ({
 
 function App() {
   const classes = useStyles();
-  const [data, setData] = useState([]);
+  const [list, setList] = useState([]);
+  const [types, setTypes] = useState([]);
 
   useEffect(() => {
     async function fetchData() {
       const result = await axios(
         'https://pokeapi.co/api/v2/pokemon',
       );
-      setData(result.data.results);
+      setList(result.data.results);
     }
     fetchData()
   }, []);
+
+  useEffect(() => {
+    async function fetchData() {
+      const result = await axios(
+        'https://pokeapi.co/api/v2/type',
+      );
+      setTypes(result.data.results);
+    }
+    fetchData()
+  }, []);
+
   return (
     <div className="App">
       <Grid container spacing={3}>
@@ -77,10 +89,12 @@ function App() {
                     id: 'type',
                   }}
                 >
-                  <option value="" >Type</option>
-                  <option value={10}>Ten</option>
-                  <option value={20}>Twenty</option>
-                  <option value={30}>Thirty</option>
+                  <option value="" >All Type</option>
+                  {
+                    types.map((item, index) => (
+                      <option value={index+1} >{item.name}</option>
+                    ))
+                  }
                 </Select>
               </FormControl>
             </Paper>
@@ -89,8 +103,8 @@ function App() {
         <Grid container justify="center" spacing={2}>
           <Grid container xs={8} spacing={2}>
             {
-              data.map((item, index) => (
-                <Grid item xs={2}>
+              list.map((item, index) => (
+                <Grid item xs={3}>
                   <Card className={classes.root}>
                     <CardActionArea>
                       <CardContent>
