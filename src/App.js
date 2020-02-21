@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import logo from './logo.svg';
 import './App.css';
 import { makeStyles } from '@material-ui/core/styles';
@@ -43,110 +44,89 @@ const useStyles = makeStyles(theme => ({
 
 function App() {
   const classes = useStyles();
+  const [data, setData] = useState([]);
+
+  useEffect(() => {
+    async function fetchData() {
+      const result = await axios(
+        'https://pokeapi.co/api/v2/pokemon',
+      );
+      setData(result.data.results);
+    }
+    fetchData()
+  }, []);
   return (
     <div className="App">
-      {/* <header className="App-header"> */}
-        <Grid container spacing={3}>
-          <Grid container justify="center" className={classes.inputGrid} spacing={2}>
-            <Grid item xs={6}>
-              <Paper component="form" className={classes.root}>
-                <InputBase
-                  placeholder="Search Pokemon"
-                  inputProps={{ 'aria-label': 'search pokemon' }}
-                />
-                <IconButton type="submit" className={classes.iconButton} aria-label="search">
-                  <SearchIcon />
-                </IconButton>
-                
-                <FormControl className={classes.formControl}>
-                  <Select
-                    native
-                    inputProps={{
-                      name: 'type',
-                      id: 'type',
-                    }}
-                  >
-                    <option value="" >Type</option>
-                    <option value={10}>Ten</option>
-                    <option value={20}>Twenty</option>
-                    <option value={30}>Thirty</option>
-                  </Select>
-                </FormControl>
-              </Paper>
-            </Grid>
-          </Grid>
-          <Grid container justify="center" spacing={2}>
-            <Grid container xs={8} spacing={2}>
-              <Grid item xs={2}>
-                {/* <Paper className={classes.paper}>card list</Paper> */}
-                <Card className={classes.root}>
-                  <CardActionArea>
-                    <CardContent>
-                      <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/6.png" height="128" width="128" />
-                      <Typography gutterBottom variant="h5" component="h2">
-                        Charizard
-                      </Typography>
-                      <Typography variant="body2" color="textSecondary" component="p">
-                        #1
-                      </Typography>
-                    </CardContent>
-                  </CardActionArea>
-                </Card>
-              </Grid>
-              <Grid item xs={2}>
-                <Paper className={classes.paper}>card list</Paper>
-              </Grid>
-              <Grid item xs={2}>
-                <Paper className={classes.paper}>card list</Paper>
-              </Grid>
-              <Grid item xs={2}>
-                <Paper className={classes.paper}>card list</Paper>
-              </Grid>
-              <Grid item xs={2}>
-                <Paper className={classes.paper}>card list</Paper>
-              </Grid>
-              <Grid item xs={2}>
-                <Paper className={classes.paper}>card list</Paper>
-              </Grid>
-              <Grid item xs={2}>
-                <Paper className={classes.paper}>card list</Paper>
-              </Grid>
-              <Grid item xs={2}>
-                <Paper className={classes.paper}>card list</Paper>
-              </Grid>
-              <Grid item xs={2}>
-                <Paper className={classes.paper}>card list</Paper>
-              </Grid>
-              <Grid item xs={2}>
-                <Paper className={classes.paper}>card list</Paper>
-              </Grid>
-              <Grid item xs={2}>
-                <Paper className={classes.paper}>card list</Paper>
-              </Grid>
-              <Grid item xs={2}>
-                <Paper className={classes.paper}>card list</Paper>
-              </Grid>
-            </Grid>
+      <Grid container spacing={3}>
+        <Grid container justify="center" className={classes.inputGrid} spacing={2}>
+          <Grid item xs={6}>
+            <Paper component="form" className={classes.root}>
+              <InputBase
+                placeholder="Search Pokemon"
+                inputProps={{ 'aria-label': 'search pokemon' }}
+              />
+              <IconButton type="submit" className={classes.iconButton} aria-label="search">
+                <SearchIcon />
+              </IconButton>
+              
+              <FormControl className={classes.formControl}>
+                <Select
+                  native
+                  inputProps={{
+                    name: 'type',
+                    id: 'type',
+                  }}
+                >
+                  <option value="" >Type</option>
+                  <option value={10}>Ten</option>
+                  <option value={20}>Twenty</option>
+                  <option value={30}>Thirty</option>
+                </Select>
+              </FormControl>
+            </Paper>
           </Grid>
         </Grid>
-        <Dialog
-          open={false}
-          // onClose={handleClose}
-          aria-labelledby="alert-dialog-title"
-          aria-describedby="alert-dialog-description"
-        >
-          <DialogTitle id="alert-dialog-title">{"Charizard"}</DialogTitle>
-          <DialogContent>
-            <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/6.png" height="128" width="128" />
-            <Chip size="small" label="flying" />
-            <Chip size="small" label="fire" />
-            {/* <DialogContentText id="alert-dialog-description">
-              Let Google help apps determine location. This means sending anonymous location data to
-              Google, even when no apps are running.
-            </DialogContentText> */}
-          </DialogContent>
-        </Dialog>
-      {/* </header> */}
+        <Grid container justify="center" spacing={2}>
+          <Grid container xs={8} spacing={2}>
+            {
+              data.map((item, index) => (
+                <Grid item xs={2}>
+                  <Card className={classes.root}>
+                    <CardActionArea>
+                      <CardContent>
+                        <img src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${index+1}.png`} alt={item.name} height="128" width="128" />
+                        <Typography gutterBottom variant="h5" component="h2">
+                          {item.name}
+                        </Typography>
+                        <Typography variant="body2" color="textSecondary" component="p">
+                          #{index+1}
+                        </Typography>
+                      </CardContent>
+                    </CardActionArea>
+                  </Card>
+                </Grid>
+              ))
+            }
+          </Grid>
+        </Grid>
+      </Grid>
+      <Dialog
+        open={false}
+        // onClose={handleClose}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogTitle id="alert-dialog-title">{"Charizard"}</DialogTitle>
+        <DialogContent>
+          <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/6.png" height="128" width="128" />
+          <Chip size="small" label="flying" />
+          <Chip size="small" label="fire" />
+          {/* <DialogContentText id="alert-dialog-description">
+            Let Google help apps determine location. This means sending anonymous location data to
+            Google, even when no apps are running.
+          </DialogContentText> */}
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }
