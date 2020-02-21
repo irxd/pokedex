@@ -46,26 +46,28 @@ const useStyles = makeStyles(theme => ({
 function App() {
   const classes = useStyles();
   const [list, setList] = useState([]);
+  const [next, setNext] = useState({});
   const [types, setTypes] = useState([]);
 
   useEffect(() => {
-    async function fetchData() {
+    async function fetchPokemon() {
       const result = await axios(
         'https://pokeapi.co/api/v2/pokemon',
       );
       setList(result.data.results);
+      setNext(result.data.next);
     }
-    fetchData()
+    fetchPokemon();
   }, []);
 
   useEffect(() => {
-    async function fetchData() {
+    async function fetchType() {
       const result = await axios(
         'https://pokeapi.co/api/v2/type',
       );
       setTypes(result.data.results);
     }
-    fetchData()
+    fetchType();
   }, []);
 
   window.onscroll = debounce(() => {
@@ -73,7 +75,12 @@ function App() {
       window.innerHeight + document.documentElement.scrollTop
       >= document.documentElement.offsetHeight
     ) {
-      console.log('load more')
+      async function fetchPokemon() {
+        const result = await axios(next);
+        setList([...list, ...result.data.results]);
+        setNext(result.data.next);
+      }
+      fetchPokemon()
     }
   }, 100);
 
