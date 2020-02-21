@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import debounce from "lodash.debounce";
 import logo from './logo.svg';
 import './App.css';
 import { makeStyles } from '@material-ui/core/styles';
@@ -67,6 +68,15 @@ function App() {
     fetchData()
   }, []);
 
+  window.onscroll = debounce(() => {
+    if (
+      window.innerHeight + document.documentElement.scrollTop
+      >= document.documentElement.offsetHeight
+    ) {
+      console.log('load more')
+    }
+  }, 100);
+
   return (
     <div className="App">
       <Grid container spacing={3}>
@@ -92,7 +102,7 @@ function App() {
                   <option value="" >All Type</option>
                   {
                     types.map((item, index) => (
-                      <option value={index+1} >{item.name}</option>
+                      <option value={index+1} key={index}>{item.name}</option>
                     ))
                   }
                 </Select>
