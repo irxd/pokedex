@@ -84,20 +84,58 @@ function App() {
     }
   }, 100);
 
+  function getPokemonId(url) {
+    return url.split("/")[6];
+  }
+
+  function handleSubmit(event) {
+    event.preventDefault();
+    const param = event.target.search.value;
+
+    async function fetchPokemon() {
+      const result = await axios(
+        `https://pokeapi.co/api/v2/pokemon/${param}`,
+      );
+      if (!param) {
+        setList(result.data.results);
+      } else {
+        setList([result.data]);
+      }
+    }
+    fetchPokemon();
+  }
+
+  function handleFilter(event) {
+    event.preventDefault();
+    const param = event.target.value;
+
+    async function fetchPokemon() {
+      const result = await axios(
+        `https://pokeapi.co/api/v2/type/${param}`,
+      );
+      if (!param) {
+        setList(result.data.results);
+      } else {
+        setList(result.data.pokemon.map(item => item.pokemon));
+      }
+    }
+    fetchPokemon();
+  }
+
   return (
     <div className="App">
       <Grid container spacing={3}>
         <Grid container justify="center" className={classes.inputGrid} spacing={2}>
           <Grid item xs={6}>
-            <Paper component="form" className={classes.root}>
+            <Paper component="form" className={classes.root} onSubmit={handleSubmit}>
               <InputBase
                 placeholder="Search Pokemon"
                 inputProps={{ 'aria-label': 'search pokemon' }}
+                name="search"
               />
               <IconButton type="submit" className={classes.iconButton} aria-label="search">
                 <SearchIcon />
               </IconButton>
-              
               <FormControl className={classes.formControl}>
                 <Select
                   native
@@ -105,11 +143,12 @@ function App() {
                     name: 'type',
                     id: 'type',
                   }}
+                  onChange={handleFilter}
                 >
                   <option value="" >All Type</option>
                   {
                     types.map((item, index) => (
-                      <option value={index+1} key={index}>{item.name}</option>
+                      <option value={item.name} key={index}>{item.name}</option>
                     ))
                   }
                 </Select>
@@ -120,17 +159,17 @@ function App() {
         <Grid container justify="center" spacing={2}>
           <Grid container xs={8} spacing={2}>
             {
-              list.map((item, index) => (
+              list.map((item) => (
                 <Grid item xs={3}>
                   <Card className={classes.root}>
                     <CardActionArea>
                       <CardContent>
-                        <img src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${index+1}.png`} alt={item.name} height="128" width="128" />
+                        <img src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${item.id || getPokemonId(item.url)}.png`} alt={item.name} height="128" width="128" />
                         <Typography gutterBottom variant="h5" component="h2">
                           {item.name}
                         </Typography>
                         <Typography variant="body2" color="textSecondary" component="p">
-                          #{index+1}
+                          #{item.id || getPokemonId(item.url)}
                         </Typography>
                       </CardContent>
                     </CardActionArea>
