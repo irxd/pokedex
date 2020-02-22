@@ -11,10 +11,10 @@ function List(props) {
 
   return (
     <Grid container justify="center" spacing={2}>
-      <Grid container xs={8} spacing={2}>
+      <Grid container item xs={8} spacing={2}>
         {
           list.map(pokemon => (
-            <Grid item xs={3}>
+            <Grid item xs={3} key={pokemon.name}>
               <Card onClick={() => {handleDetail(pokemon.name)}}>
                 <CardActionArea>
                   <CardContent>

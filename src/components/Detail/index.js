@@ -117,10 +117,10 @@ function Detail(props) {
             />
           </TabPanel>
         </Grid>
-        <Grid item xs={4} spacing={2}>
+        <Grid container item xs={4} spacing={2}>
           {
             detail.types && detail.types.map(type => (
-              <Chip className={classes.chip} size="small" label={type.type.name} />
+              <Chip className={classes.chip} size="small" label={type.type.name} key={type.type.name} />
             ))
           }
         </Grid>
