@@ -15,6 +15,7 @@ import TableRow from '@material-ui/core/TableRow';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import Paper from '@material-ui/core/Paper';
+import DetailTable from './components/DetailTable';
 
 const useStyles = makeStyles(theme => ({
   chip: {
@@ -75,66 +76,44 @@ function Detail(props) {
             <Tab label="Abilities" />
           </Tabs>
           <TabPanel value={value} index={0}>
-          <TableContainer component={Paper} style={{maxHeight: 160}}>
-            <Table aria-label="simple table">
-              <TableBody>
-                <TableRow key='height'>
-                  <TableCell component="th" scope="row">
-                    Height
-                  </TableCell>
-                  <TableCell align="right">{detail.height}</TableCell>
-                </TableRow>
-                <TableRow key='weight'>
-                  <TableCell component="th" scope="row">
-                    Weight
-                  </TableCell>
-                  <TableCell align="right">{detail.weight}</TableCell>
-                </TableRow>
-                <TableRow key='base_exp'>
-                  <TableCell component="th" scope="row">
-                    Base Experience
-                  </TableCell>
-                  <TableCell align="right">{detail.base_experience}</TableCell>
-                </TableRow>
-              </TableBody>
-            </Table>
-          </TableContainer>
+            <TableContainer component={Paper} style={{maxHeight: 160}}>
+              <Table aria-label="simple table">
+                <TableBody>
+                  <TableRow key='height'>
+                    <TableCell component="th" scope="row">
+                      height
+                    </TableCell>
+                    <TableCell align="right">{detail.height}</TableCell>
+                  </TableRow>
+                  <TableRow key='weight'>
+                    <TableCell component="th" scope="row">
+                      weight
+                    </TableCell>
+                    <TableCell align="right">{detail.weight}</TableCell>
+                  </TableRow>
+                  <TableRow key='base_exp'>
+                    <TableCell component="th" scope="row">
+                      base experience
+                    </TableCell>
+                    <TableCell align="right">{detail.base_experience}</TableCell>
+                  </TableRow>
+                </TableBody>
+              </Table>
+            </TableContainer>
           </TabPanel>
           <TabPanel value={value} index={1}>
-            <TableContainer component={Paper} style={{maxHeight: 160, overflow: 'auto'}}>
-              <Table aria-label="simple table">
-                <TableBody>
-                  {
-                    detail.stats && detail.stats.map(item => (
-                      <TableRow key={item.stat.name}>
-                        <TableCell component="th" scope="row">
-                          {item.stat.name}
-                        </TableCell>
-                        <TableCell align="right">{item.base_stat}</TableCell>
-                      </TableRow>
-                    ))
-                  }
-                </TableBody>
-              </Table>
-            </TableContainer>
+            <DetailTable
+              data={detail.stats}
+              title="stat"
+              value="base_stat"
+            />
           </TabPanel>
           <TabPanel value={value} index={2}>
-            <TableContainer component={Paper} style={{maxHeight: 160, overflow: 'auto'}}>
-              <Table aria-label="simple table">
-                <TableBody>
-                  {
-                    detail.abilities && detail.abilities.map(item => (
-                      <TableRow key={item.ability.name}>
-                        <TableCell component="th" scope="row">
-                          {item.ability.name}
-                        </TableCell>
-                        <TableCell align="right">{item.slot}</TableCell>
-                      </TableRow>
-                    ))
-                  }
-                </TableBody>
-              </Table>
-            </TableContainer>
+            <DetailTable
+              data={detail.abilities}
+              title="ability"
+              value="slot"
+            />
           </TabPanel>
         </Grid>
         <Grid item xs={4} spacing={2}>
