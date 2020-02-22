@@ -1,16 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import debounce from "lodash.debounce";
-import logo from './logo.svg';
 import './App.css';
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
-import InputBase from '@material-ui/core/InputBase';
-import IconButton from '@material-ui/core/IconButton';
-import SearchIcon from '@material-ui/icons/Search';
-import FormControl from '@material-ui/core/FormControl';
-import Select from '@material-ui/core/Select';
 import Card from '@material-ui/core/Card';
 import CardActionArea from '@material-ui/core/CardActionArea';
 import CardContent from '@material-ui/core/CardContent';
@@ -27,6 +21,7 @@ import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
 import TableRow from '@material-ui/core/TableRow';
+import Filter from './components/Filter';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -177,37 +172,11 @@ function App() {
   return (
     <div className="App">
       <Grid container spacing={3}>
-        <Grid container justify="center" className={classes.inputGrid} spacing={2}>
-          <Grid item xs={6}>
-            <Paper component="form" className={classes.root} onSubmit={handleSubmit}>
-              <InputBase
-                placeholder="Search Pokemon"
-                inputProps={{ 'aria-label': 'search pokemon' }}
-                name="search"
-              />
-              <IconButton type="submit" className={classes.iconButton} aria-label="search">
-                <SearchIcon />
-              </IconButton>
-              <FormControl className={classes.formControl}>
-                <Select
-                  native
-                  inputProps={{
-                    name: 'type',
-                    id: 'type',
-                  }}
-                  onChange={handleFilter}
-                >
-                  <option value="" >All Type</option>
-                  {
-                    types.map((type, index) => (
-                      <option value={type.name} key={index}>{type.name}</option>
-                    ))
-                  }
-                </Select>
-              </FormControl>
-            </Paper>
-          </Grid>
-        </Grid>
+        <Filter
+          handleSubmit={handleSubmit}
+          handleFilter={handleFilter}
+          types={types}
+        />
         <Grid container justify="center" spacing={2}>
           <Grid container xs={8} spacing={2}>
             {
@@ -233,7 +202,6 @@ function App() {
         </Grid>
       </Grid>
       <Dialog
-        fullWidth="md"
         open={modal}
         onClose={handleCloseModal}
         aria-labelledby="alert-dialog-title"
