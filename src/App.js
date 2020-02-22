@@ -5,8 +5,9 @@ import Grid from '@material-ui/core/Grid';
 import Filter from './components/Filter';
 import List from './components/List';
 import Detail from './components/Detail';
-import './App.css';
+import Error from './components/Error';
 import { POKEMON_URL } from './utils/constant';
+import './App.css';
 
 function App() {
   const [list, setList] = useState([]);
@@ -15,17 +16,23 @@ function App() {
   const [types, setTypes] = useState([]);
   const [modal, setModal] = useState(false);
   const [value, setValue] = useState(0);
+  const [error, setError] = useState(false);
 
   const fetchPokemon = async param => {
-    const result = await axios(
+    await axios(
       `${POKEMON_URL}/pokemon${param ? '/'+param : ''}`,
-    );
-    if (!param) {
-      setList(result.data.results);
-      setNext(result.data.next);
-    } else {
-      setList([result.data]);
-    }
+    )
+    .then(result => {
+      if (!param) {
+        setList(result.data.results);
+        setNext(result.data.next);
+      } else {
+        setList([result.data]);
+      }
+    })
+    .catch(error => {
+      setError(true);
+    });;
   };
 
   const fetchType = async () => {
@@ -100,6 +107,10 @@ function App() {
     setModal(false);
   };
 
+  const handleCloseSnackbar = () => {
+    setError(false);
+  }
+
   return (
     <div className="App">
       <Grid container spacing={3}>
@@ -120,6 +131,10 @@ function App() {
         handleCloseModal={handleCloseModal}
         value={value}
         setValue={setValue}
+      />
+      <Error
+        error={error}
+        handleCloseSnackbar={handleCloseSnackbar}
       />
     </div>
   );
