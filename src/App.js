@@ -6,6 +6,7 @@ import Filter from './components/Filter';
 import List from './components/List';
 import Detail from './components/Detail';
 import './App.css';
+import { POKEMON_URL } from './utils/constant';
 
 function App() {
   const [list, setList] = useState([]);
@@ -15,24 +16,47 @@ function App() {
   const [modal, setModal] = useState(false);
   const [value, setValue] = useState(0);
 
-  useEffect(() => {
-    async function fetchPokemon() {
-      const result = await axios(
-        'https://pokeapi.co/api/v2/pokemon',
-      );
+  const fetchPokemon = async param => {
+    const result = await axios(
+      `${POKEMON_URL}/pokemon${param ? '/'+param : ''}`,
+    );
+    if (!param) {
       setList(result.data.results);
       setNext(result.data.next);
+    } else {
+      setList([result.data]);
     }
-    fetchPokemon();
-  }, []);
+  };
+
+  const fetchType = async () => {
+    const result = await axios(
+      `${POKEMON_URL}/type`,
+    );
+    setTypes(result.data.results);
+  };
+
+  const fetchNextPokemon = async param => {
+    const result = await axios(param);
+    setList([...list, ...result.data.results]);
+    setNext(result.data.next);
+  };
+
+  const fetchPokemonByType = async param => {
+    const result = await axios(
+      `${POKEMON_URL}/type/${param}`,
+    );
+    setList(result.data.pokemon.map(item => item.pokemon));
+  };
+
+  const fetchPokemonDetail = async param => {
+    const result = await axios(
+      `${POKEMON_URL}/pokemon/${param}`,
+    );
+    setDetail(result.data);
+  };
 
   useEffect(() => {
-    async function fetchType() {
-      const result = await axios(
-        'https://pokeapi.co/api/v2/type',
-      );
-      setTypes(result.data.results);
-    }
+    fetchPokemon();
     fetchType();
   }, []);
 
@@ -41,69 +65,40 @@ function App() {
       window.innerHeight + document.documentElement.scrollTop
       >= document.documentElement.offsetHeight
     ) {
-      async function fetchPokemon() {
-        const result = await axios(next);
-        setList([...list, ...result.data.results]);
-        setNext(result.data.next);
-      }
-      fetchPokemon()
+      fetchNextPokemon(next);
     }
   }, 100);
 
-  function getPokemonId(url) {
+  const getPokemonId = url => {
     return url.split("/")[6];
-  }
+  };
 
-  function handleSubmit(event) {
+  const handleSubmit = event => {
     event.preventDefault();
     const param = event.target.search.value;
+    fetchPokemon(param);
+  };
 
-    async function fetchPokemon() {
-      const result = await axios(
-        `https://pokeapi.co/api/v2/pokemon/${param}`,
-      );
-      if (!param) {
-        setList(result.data.results);
-      } else {
-        setList([result.data]);
-      }
-    }
-    fetchPokemon();
-  }
-
-  function handleFilter(event) {
+  const handleFilter = event => {
     event.preventDefault();
     const param = event.target.value;
 
-    async function fetchPokemon() {
-      const result = await axios(
-        `https://pokeapi.co/api/v2/type/${param}`,
-      );
-      if (!param) {
-        setList(result.data.results);
-      } else {
-        setList(result.data.pokemon.map(item => item.pokemon));
-      }
+    if (!param) {
+      fetchPokemon();
+    } else {
+      fetchPokemonByType(param);
     }
-    fetchPokemon();
-  }
+  };
 
   const handleDetail = name => {
     setModal(true);
     setValue(0);
-
-    async function fetchPokemonDetail() {
-      const result = await axios(
-        `https://pokeapi.co/api/v2/pokemon/${name}`,
-      );
-      setDetail(result.data);
-    }
-    fetchPokemonDetail();
-  }
+    fetchPokemonDetail(name);
+  };
 
   const handleCloseModal = () => {
     setModal(false);
-  }
+  };
 
   return (
     <div className="App">

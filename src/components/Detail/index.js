@@ -16,6 +16,7 @@ import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import Paper from '@material-ui/core/Paper';
 import DetailTable from './components/DetailTable';
+import { POKEMON_IMAGE_URL } from '../../utils/constant';
 
 const useStyles = makeStyles(theme => ({
   chip: {
@@ -59,7 +60,7 @@ function Detail(props) {
       <DialogContent>
         <Grid container>
           <Grid item xs={4}>
-            <img src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${detail.id}.png`} alt={detail} height="196" width="196" />
+            <img src={`${POKEMON_IMAGE_URL}/${detail.id}.png`} alt={detail} height="196" width="196" />
           </Grid>
           <Grid item xs={8}>
             <Tabs

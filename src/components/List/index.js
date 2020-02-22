@@ -4,6 +4,7 @@ import Card from '@material-ui/core/Card';
 import CardActionArea from '@material-ui/core/CardActionArea';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
+import { POKEMON_IMAGE_URL } from '../../utils/constant';
 
 function List(props) {
   const { list, handleDetail, getPokemonId } = props;
@@ -17,7 +18,7 @@ function List(props) {
               <Card onClick={() => {handleDetail(pokemon.name)}}>
                 <CardActionArea>
                   <CardContent>
-                    <img src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemon.id || getPokemonId(pokemon.url)}.png`} alt={pokemon.name} height="128" width="128" />
+                    <img src={`${POKEMON_IMAGE_URL}/${pokemon.id || getPokemonId(pokemon.url)}.png`} alt={pokemon.name} height="128" width="128" />
                     <Typography gutterBottom variant="h5" component="h2">
                       {pokemon.name}
                     </Typography>
