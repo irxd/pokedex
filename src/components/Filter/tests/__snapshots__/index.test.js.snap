@@ -1,0 +1,66 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Filter /> Render filter component and should match the snapshot 1`] = `
+<ForwardRef(WithStyles)
+  className="makeStyles-inputGrid-1"
+  container={true}
+  justify="center"
+  spacing={2}
+>
+  <ForwardRef(WithStyles)
+    item={true}
+    xs={6}
+  >
+    <ForwardRef(WithStyles)
+      component="form"
+      onSubmit={[Function]}
+    >
+      <ForwardRef(WithStyles)
+        inputProps={
+          Object {
+            "aria-label": "search pokemon",
+          }
+        }
+        name="search"
+        placeholder="Search Pokemon"
+      />
+      <ForwardRef(WithStyles)
+        aria-label="search"
+        type="submit"
+      >
+        <UNDEFINED />
+      </ForwardRef(WithStyles)>
+      <ForwardRef(WithStyles)
+        className="makeStyles-formControl-2"
+      >
+        <ForwardRef(WithStyles)
+          inputProps={
+            Object {
+              "id": "type",
+              "name": "type",
+            }
+          }
+          native={true}
+          onChange={[Function]}
+        >
+          <option
+            value=""
+          >
+            All Type
+          </option>
+          <option
+            value="normal"
+          >
+            normal
+          </option>
+          <option
+            value="fighting"
+          >
+            fighting
+          </option>
+        </ForwardRef(WithStyles)>
+      </ForwardRef(WithStyles)>
+    </ForwardRef(WithStyles)>
+  </ForwardRef(WithStyles)>
+</ForwardRef(WithStyles)>
+`;

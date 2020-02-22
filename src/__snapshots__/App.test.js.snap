@@ -1,0 +1,34 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<App /> Render main page and should match the snapshot 1`] = `
+<div
+  className="App"
+>
+  <ForwardRef(WithStyles)
+    container={true}
+    spacing={3}
+  >
+    <Filter
+      handleFilter={[Function]}
+      handleSubmit={[Function]}
+      types={Array []}
+    />
+    <List
+      getPokemonId={[Function]}
+      handleDetail={[Function]}
+      list={Array []}
+    />
+  </ForwardRef(WithStyles)>
+  <Detail
+    detail={Object {}}
+    handleCloseModal={[Function]}
+    modal={false}
+    setValue={[Function]}
+    value={0}
+  />
+  <Error
+    error={false}
+    handleCloseSnackbar={[Function]}
+  />
+</div>
+`;

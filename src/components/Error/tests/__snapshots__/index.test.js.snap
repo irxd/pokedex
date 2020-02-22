@@ -1,0 +1,30 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Error /> Render error component and should match the snapshot 1`] = `
+<ForwardRef(WithStyles)
+  action={
+    <React.Fragment>
+      <ForwardRef(WithStyles)
+        aria-label="close"
+        color="inherit"
+        onClick={[Function]}
+        size="small"
+      >
+        <UNDEFINED
+          fontSize="small"
+        />
+      </ForwardRef(WithStyles)>
+    </React.Fragment>
+  }
+  anchorOrigin={
+    Object {
+      "horizontal": "left",
+      "vertical": "bottom",
+    }
+  }
+  autoHideDuration={2000}
+  message="Not found"
+  onClose={[Function]}
+  open={true}
+/>
+`;

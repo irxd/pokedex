@@ -1,0 +1,83 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<List /> Render list component and should match the snapshot 1`] = `
+<ForwardRef(WithStyles)
+  container={true}
+  justify="center"
+  spacing={2}
+>
+  <ForwardRef(WithStyles)
+    container={true}
+    item={true}
+    spacing={2}
+    xs={8}
+  >
+    <ForwardRef(WithStyles)
+      item={true}
+      xs={3}
+    >
+      <ForwardRef(WithStyles)
+        onClick={[Function]}
+      >
+        <ForwardRef(WithStyles)>
+          <ForwardRef(WithStyles)>
+            <img
+              alt="bulbasaur"
+              height="128"
+              src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/undefined.png"
+              width="128"
+            />
+            <ForwardRef(WithStyles)
+              component="h2"
+              gutterBottom={true}
+              variant="h5"
+            >
+              bulbasaur
+            </ForwardRef(WithStyles)>
+            <ForwardRef(WithStyles)
+              color="textSecondary"
+              component="p"
+              variant="body2"
+            >
+              #
+            </ForwardRef(WithStyles)>
+          </ForwardRef(WithStyles)>
+        </ForwardRef(WithStyles)>
+      </ForwardRef(WithStyles)>
+    </ForwardRef(WithStyles)>
+    <ForwardRef(WithStyles)
+      item={true}
+      xs={3}
+    >
+      <ForwardRef(WithStyles)
+        onClick={[Function]}
+      >
+        <ForwardRef(WithStyles)>
+          <ForwardRef(WithStyles)>
+            <img
+              alt="ivysaur"
+              height="128"
+              src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/undefined.png"
+              width="128"
+            />
+            <ForwardRef(WithStyles)
+              component="h2"
+              gutterBottom={true}
+              variant="h5"
+            >
+              ivysaur
+            </ForwardRef(WithStyles)>
+            <ForwardRef(WithStyles)
+              color="textSecondary"
+              component="p"
+              variant="body2"
+            >
+              #
+            </ForwardRef(WithStyles)>
+          </ForwardRef(WithStyles)>
+        </ForwardRef(WithStyles)>
+      </ForwardRef(WithStyles)>
+    </ForwardRef(WithStyles)>
+  </ForwardRef(WithStyles)>
+</ForwardRef(WithStyles)>
+`;
