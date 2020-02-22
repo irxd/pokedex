@@ -9,9 +9,6 @@ import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 
 const useStyles = makeStyles(theme => ({
-  root: {
-    flexGrow: 1,
-  },
   inputGrid: {
     marginBottom: theme.spacing(1),
     marginTop: theme.spacing(3)
@@ -19,7 +16,7 @@ const useStyles = makeStyles(theme => ({
   formControl: {
     margin: theme.spacing(1),
     marginLeft: theme.spacing(10),
-    minWidth: 200,
+    minWidth: 200
   }
 }));
 
@@ -30,7 +27,7 @@ function Filter(props) {
   return (
     <Grid container justify="center" className={classes.inputGrid} spacing={2}>
       <Grid item xs={6}>
-        <Paper component="form" className={classes.root} onSubmit={handleSubmit}>
+        <Paper component="form" onSubmit={handleSubmit}>
           <InputBase
             placeholder="Search Pokemon"
             inputProps={{ 'aria-label': 'search pokemon' }}
